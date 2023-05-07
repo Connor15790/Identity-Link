@@ -1,0 +1,54 @@
+.information {
+    width: 100%;
+    display: flex;
+}
+
+.image {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    margin-top: 105px;
+    width: 50%;
+    height: 500px;
+}
+
+.details {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    margin-top: 82px;
+    width: 50%;
+    height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.details ul {
+    list-style: none;
+    text-align: justify;
+    margin-top: 0;
+}
+
+.details ul li {
+    margin: 20px;
+}
+
+.details ul li h2 {
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: underline;
+}
+
+.details ul li span {
+    font-size: 25px;
+    text-align: center;
+    font-family: math;
+}
+
+.error {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 35px;
+}
