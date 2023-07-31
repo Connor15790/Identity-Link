@@ -1,9 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
-from django.core.mail import EmailMessage
-from django.views.decorators import gzip
-from django.http import StreamingHttpResponse
 import cv2
 import threading
 import face_recognition
@@ -45,10 +42,10 @@ def getpic(request):
     face_encodings = face_recognition.face_encodings(gen(cam), face_locations)
     
     if not face_encodings:
-        return render(request, "face/error.html")    
+        return render(request, "face/error.html")
 
     for face_encoding in face_encodings:
-        matches = face_recognition.compare_faces(known_face_encodings, face_encoding) 
+        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
         face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
         best_match_index = np.argmin(face_distances)
         
@@ -59,11 +56,14 @@ def getpic(request):
     # persons = Person.objects.get(Image = "face/images/" + name + ".jpg")
     persons = Person.objects.all().filter(Image = "face/images/" + name + ".jpg")
     ImageSource = "/media/face/images/" + name + ".jpg"
+    print(name)
     for person in persons:
         PFName = person.First_Name
         PLName = person.Last_Name
         PDesc = person.Description
         PDoB = person.Date_of_Birth
+        PCr = person.Criminal_Record
+        POcp = person.Occupation
         PImg = person.Image
         
     params = {
@@ -71,10 +71,11 @@ def getpic(request):
         "PLName": PLName,
         "PDesc": PDesc,
         "P_DoB": PDoB,
+        "PCR": PCr,
+        "POcp": POcp,
         "PImg": PImg,
         "ImageSource": ImageSource
     }
-    print(ImageSource)
     return render(request, "face/getpic.html", params)
 
 #to capture video class
