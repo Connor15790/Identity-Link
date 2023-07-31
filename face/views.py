@@ -43,7 +43,7 @@ def getpic(request):
     
     if not face_encodings:
         return render(request, "face/error.html")
-
+    
     for face_encoding in face_encodings:
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
         face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
@@ -52,6 +52,11 @@ def getpic(request):
         if matches[best_match_index]:
             # Give the detected face the name of the employee that match
             name = known_face_names[best_match_index]
+            
+    try:
+        print(name)
+    finally:
+        return render(request, "face/error.html")
 
     # persons = Person.objects.get(Image = "face/images/" + name + ".jpg")
     persons = Person.objects.all().filter(Image = "face/images/" + name + ".jpg")
